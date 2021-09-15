@@ -112,9 +112,6 @@ if __name__ == '__main__':
     
     args = args_parser.parse_args()
 
-    config = load_config(args)
-
-    # func = getattr(args.cmd)
-    objs = globals()[args.cmd](config)
+    objs = globals()[args.cmd](load_config(args))
     for obj in objs:
         print(obj.csv())
