@@ -8,6 +8,7 @@ class Credentials():
             - username: str
             - password: str
         """
+
         assert 'username' in config, 'Missing username for credentials'
         assert 'password' in config, 'Missing password for credentials'
 

@@ -22,10 +22,21 @@ class BitbucketObject:
 class BuildStatus(BitbucketObject):
 
     def __init__(self, build_status):
-        """
-
+        """ 
+        
         :param build_status: dict
+            A dictionary containing the keys:
+            - key: str, the build key
+            - description: str, build description (optional)
+            - url: str, build url (optional)
+            - refname: str, build reference name (optional)
+            - state: str, build status (optional)
+            - created_on: str, when this build was created (optional)
+            - updated_on: str, when this build was updated (optional)
+            - type: str, build type (optional)
+            - name: str, build name (optional)
         """
+        
         assert 'key' in build_status
 
         self.key = build_status.get('key')
@@ -43,7 +54,19 @@ class BuildStatus(BitbucketObject):
 
 class Commit(BitbucketObject):
 
+    """Class representing a commit on Bitbucket"""
+
     def __init__(self, commit_data):
+        """
+
+        :param commit_data: dict
+            A dictionary containing:
+            - hash: str, commit id sha256
+            - date: str, commit date (optional)
+            - message: str, commit message (optional)
+            - type: str, commit type (optional)
+        """
+
         assert 'hash' in commit_data
         self.hash = commit_data.get('hash')
         self.date = commit_data.get('date')
@@ -52,6 +75,16 @@ class Commit(BitbucketObject):
 
 
 def get_values(config, api_url):
+    """
+    A wrapper for the API get request
+    :param config: dict
+        The application configurations
+    :param api_url: str
+        The API URL
+    :return: list
+        List of objects returned by the API request
+    """
+
     logging.debug(f'API URL: {api_url}')
     credentials = Credentials(config)
 
@@ -65,38 +98,58 @@ def get_values(config, api_url):
 
 
 def get_build_status(config):
+    """
+
+    :param config: dict
+        The application configurations
+    :return: list of BuildStatus
+    """
+
     api_url = ApiCommit(config).api_url + '/statuses'
     return [BuildStatus(value) for value in get_values(config, api_url)]
 
 
 def get_commits(config):
+    """
+
+    :param config: dict
+        The application configurations
+    :return: list of Commit
+    """
+
     api_url = ApiRepositories(config).api_url + '/commits'
     return [Commit(value) for value in get_values(config, api_url)]
 
 
-def load_config(args):
+def load_config(arguments):
+    """
+    Load configuration from config file and/or from program arguments
+    :param arguments: dict
+        Program arguments
+    :return: dict with configurations
+    """
 
     config = {}
 
-    if args.config:
-        config = json.load(args.config)
+    if arguments.config:
+        config = json.load(arguments.config)
     
-    if args.user:
-        config['username'] = args.user
+    if arguments.user:
+        config['username'] = arguments.user
 
-    if args.password:
-        config['password'] = args.password
+    if arguments.password:
+        config['password'] = arguments.password
 
-    if args.revision:
-        config['revision'] = args.revision
+    if arguments.revision:
+        config['revision'] = arguments.revision
 
-    if args.repository:
-        config['repository'] = args.repository
+    if arguments.repository:
+        config['repository'] = arguments.repository
 
-    if args.owner:
-        config['owner'] = args.owner
+    if arguments.owner:
+        config['owner'] = arguments.owner
 
-    logging.info(f"Running {args.cmd} with configuration:")
+    logging.info(f"Running {arguments.cmd} with configuration:")
     for key in config.keys():
         logging.debug(f"    {key}: {config[key]}")
 
@@ -119,6 +172,6 @@ if __name__ == '__main__':
     
     args = args_parser.parse_args()
 
-    objs = globals()[args.cmd](load_config(args))
-    for obj in objs:
-        print(obj.csv( ' | '))
+    objects = globals()[args.cmd](load_config(args))
+    for obj in objects:
+        print(obj.csv(' | '))
