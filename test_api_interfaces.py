@@ -37,7 +37,7 @@ class TestApiInterfaces(unittest.TestCase):
         self.assertEqual(api.repo_slug, config['repo_slug'])
         self.assertEqual(api.api_url, f"{config['base_url']}/{config['api_version']}/repositories/{config['owner']}/{config['repo_slug']}")
         self.assertEqual(api.api_url, str(api))
-        
+
     def testApiCommit(self):
         config = self.config
         api = ApiCommit(config)

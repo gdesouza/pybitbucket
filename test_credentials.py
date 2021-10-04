@@ -26,6 +26,7 @@ class TestPybitbucket(unittest.TestCase):
             credentials = Credentials(config)
 
         self.assertTrue('Missing username for credentials' in str(context.exception))
+        self.assertIsNone(credentials)
 
     def testPasswordNotSet(self):
         config = {

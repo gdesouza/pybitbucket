@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-import os
 import requests
 import logging
 import json
 import argparse
 
 from credentials import Credentials
-from api_interfaces import ApiBase, ApiCommit, ApiRepositories
+from api_interfaces import ApiCommit, ApiRepositories
+
 
 class BitbucketObject:
 
@@ -15,10 +15,17 @@ class BitbucketObject:
         attributes = self.__dict__
         return separator.join([str(attributes.get(key)) for key in attributes.keys()])
 
+    def table(self):
+        return self.csv(' | ')
+
 
 class BuildStatus(BitbucketObject):
 
     def __init__(self, build_status):
+        """
+
+        :param build_status: dict
+        """
         assert 'key' in build_status
 
         self.key = build_status.get('key')
@@ -31,7 +38,7 @@ class BuildStatus(BitbucketObject):
         self.type = build_status.get('type', '')
         self.name = build_status.get('name', ' ')
 
-        #TODO: add repository, links, commit object.
+        # TODO: add repository, links, commit object.
 
 
 class Commit(BitbucketObject):
@@ -42,7 +49,6 @@ class Commit(BitbucketObject):
         self.date = commit_data.get('date')
         self.message = commit_data.get('message')
         self.type = commit_data.get('type')
-
 
 
 def get_values(config, api_url):
@@ -61,11 +67,12 @@ def get_values(config, api_url):
 def get_build_status(config):
     api_url = ApiCommit(config).api_url + '/statuses'
     return [BuildStatus(value) for value in get_values(config, api_url)]
-        
+
 
 def get_commits(config):
     api_url = ApiRepositories(config).api_url + '/commits'
     return [Commit(value) for value in get_values(config, api_url)]
+
 
 def load_config(args):
 
@@ -74,7 +81,7 @@ def load_config(args):
     if args.config:
         config = json.load(args.config)
     
-    if args.user: 
+    if args.user:
         config['username'] = args.user
 
     if args.password:
@@ -114,4 +121,4 @@ if __name__ == '__main__':
 
     objs = globals()[args.cmd](load_config(args))
     for obj in objs:
-        print(obj.csv())
+        print(obj.csv( ' | '))

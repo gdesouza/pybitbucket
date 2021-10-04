@@ -1,12 +1,19 @@
 
 
 class ApiBase:
-    
+
     def __init__(self, config):
+        """
+        :param config: dict
+            dictionary containing the keys:
+            - base_url (optional)
+            - api_version (optional)
+        """
         self.base_url = config.get('base_url', 'https://api.bitbucket.org')
         self.api_version = config.get('api_version', '2.0')
 
     def __str__(self):
+        """Convert instance to string representation"""
         return self.api_url
 
     @property
