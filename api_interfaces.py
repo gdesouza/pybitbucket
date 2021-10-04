@@ -15,8 +15,6 @@ class ApiBase:
         self.api_version = config.get('api_version', '2.0')
 
     def __str__(self):
-        """Convert instance to string representation."""
-
         return self.api_url
 
     @property
@@ -37,18 +35,12 @@ class ApiRepositories(ApiBase):
 
         assert 'owner' in config, 'Missing repository owner'
         assert 'repo_slug' in config, 'Missing repository name'
-        
+
         self.owner = config.get('owner')
         self.repo_slug = config.get('repo_slug')
         super().__init__(config)
 
     def __str__(self):
-        """
-
-        :return: str
-            The API URL
-        """
-
         return self.api_url
     
     @property
@@ -74,12 +66,6 @@ class ApiCommit(ApiRepositories):
         super().__init__(config)
 
     def __str__(self):
-        """
-
-        :return: str
-            The API URL
-        """
-
         return self.api_url
     
     @property

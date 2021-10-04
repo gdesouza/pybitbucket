@@ -23,7 +23,7 @@ class BuildStatus(BitbucketObject):
 
     def __init__(self, build_status):
         """ 
-        
+
         :param build_status: dict
             A dictionary containing the keys:
             - key: str, the build key
@@ -53,7 +53,6 @@ class BuildStatus(BitbucketObject):
 
 
 class Commit(BitbucketObject):
-
     """Class representing a commit on Bitbucket"""
 
     def __init__(self, commit_data):
