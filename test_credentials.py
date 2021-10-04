@@ -21,12 +21,11 @@ class TestPybitbucket(unittest.TestCase):
         config = {
             'password': '12345'
         }
-
         with self.assertRaises(AssertionError) as context:
             credentials = Credentials(config)
+            self.assertIsNone(credentials)
 
         self.assertTrue('Missing username for credentials' in str(context.exception))
-        self.assertIsNone(credentials)
 
     def testPasswordNotSet(self):
         config = {
