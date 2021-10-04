@@ -1,0 +1,2 @@
+# pybitbucket
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/739028954f354e2ca27dda7debec3280)](https://app.codacy.com/gh/gdesouza/pybitbucket?utm_source=github.com&utm_medium=referral&utm_content=gdesouza/pybitbucket&utm_campaign=Badge_Grade_Settings)
