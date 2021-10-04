@@ -18,25 +18,16 @@ class TestPybitbucket(unittest.TestCase):
         self.assertEqual(credentials.tuple, (config['username'], config['password']))
 
     def testUsernameNotSet(self):
-        config = {
-            'password': '12345'
-        }
+        config = {'password': '12345'}
         with self.assertRaises(AssertionError) as context:
-            credentials = Credentials(config)
-            self.assertIsNone(credentials)
-
+            Credentials(config)
         self.assertTrue('Missing username for credentials' in str(context.exception))
 
     def testPasswordNotSet(self):
-        config = {
-            'username': 'test'
-        }
-
+        config = {'username': 'test'}
         with self.assertRaises(AssertionError) as context:
-            credentials = Credentials(config)
-
+            Credentials(config)
         self.assertTrue('Missing password for credentials' in str(context.exception))
-
 
 
 if __name__ == '__main__':
