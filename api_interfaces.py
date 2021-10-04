@@ -4,6 +4,7 @@ class ApiBase:
 
     def __init__(self, config):
         """
+
         :param config: dict
             dictionary containing the keys:
             - base_url (optional)
@@ -14,7 +15,7 @@ class ApiBase:
         self.api_version = config.get('api_version', '2.0')
 
     def __str__(self):
-        """Convert instance to string representation"""
+        """Convert instance to string representation."""
 
         return self.api_url
 

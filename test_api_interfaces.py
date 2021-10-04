@@ -31,8 +31,6 @@ class TestApiInterfaces(unittest.TestCase):
     def testApiRepository(self):
         config = self.config
         api = ApiRepositories(config)
-        self.assertEqual(api.base_url, config['base_url'])
-        self.assertEqual(api.api_version, config['api_version'])
         self.assertEqual(api.owner, config['owner'])
         self.assertEqual(api.repo_slug, config['repo_slug'])
         self.assertEqual(api.api_url, f"{config['base_url']}/{config['api_version']}/repositories/{config['owner']}/{config['repo_slug']}")
@@ -41,10 +39,6 @@ class TestApiInterfaces(unittest.TestCase):
     def testApiCommit(self):
         config = self.config
         api = ApiCommit(config)
-        self.assertEqual(api.base_url, config['base_url'])
-        self.assertEqual(api.api_version, config['api_version'])
-        self.assertEqual(api.owner, config['owner'])
-        self.assertEqual(api.repo_slug, config['repo_slug'])
         self.assertEqual(api.revision, config['revision'])
         self.assertEqual(api.api_url, f"{config['base_url']}/{config['api_version']}/repositories/{config['owner']}/{config['repo_slug']}/commit/{config['revision']}")
         self.assertEqual(api.api_url, str(api))
